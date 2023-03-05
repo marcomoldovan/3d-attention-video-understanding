@@ -3,8 +3,8 @@
 defaults:
   - _self_
   - data: mnist.yaml # choose datamodule with `test_dataloader()` for evaluation
-  - model: mnist.yaml
-  - logger: null
+  - model: model.yaml
+  - logger: wandb.yaml
   - trainer: default.yaml
   - paths: default.yaml
   - extras: default.yaml

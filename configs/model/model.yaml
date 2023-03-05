@@ -1,0 +1,31 @@
+_target_: src.models.lit_module.SpatioTemporalVideoTransformer
+
+vidoe_model:
+  _target_: src.models.components.simple_dense_net.SimpleDenseNet
+  patch_size: [4, 4, 4]
+  embed_dim: 64
+  depths: [2, 2, 2]
+  num_heads: [8, 8, 8]
+  window_size: [6, 6, 6]
+
+text_model:
+  _target_: src.models.components.text_model.BertWrapper
+  pretrained_name: google/bert_uncased_L-4_H-256_A-4
+
+criterion:
+  _target_: src.models.components.loss_fn.LongShortAlignmentLoss
+  align_full_video: true
+  align_video_moments: true
+
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 0.001
+  weight_decay: 0.0
+
+scheduler:
+  _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+  _partial_: true
+  mode: min
+  factor: 0.1
+  patience: 10
